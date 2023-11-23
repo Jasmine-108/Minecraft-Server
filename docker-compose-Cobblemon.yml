@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+      - "24454:24454/udp"
+    environment:
+      # The type of server to use chosen from: https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms/
+      TYPE: "AUTO_CURSEFORGE"
+      # The Curse Forge Developer Console API key to use type AUTO_CURSEFORGE. Escape $ symbols with an additional $
+      CF_API_KEY: '$$2a$$10$$wqjCZbaBcQ8sqeYbDqn6kue0gU.RrrqyLyUssF8Q/MvSlR2jop9Wy'
+      # The Curse Forge URL of the modpack to use. Add the verion URL of the specific version at the end to pin the modpack version
+      CF_PAGE_URL: "https://www.curseforge.com/minecraft/modpacks/modified-cobblemon"
+      # The project ID of mods to exclude.
+      CF_EXCLUDE_MODS: "486778,917285"
+      CF_DOWNLOADS_REPO: /root/mods
+      # Java memory heap size
+      MEMORY: "4G"
+      # Set this to allow Minecraft to access more RAM for world generation
+      # if you keep getting stuck at "Preparing spawn area"
+      MAX_MEMORY: "10G"
+      # Accept the End User License Agreement
+      EULA: "TRUE"
+    volumes:
+      # attach the relative directory 'data' to the container's /data path
+      - /root:/mods
